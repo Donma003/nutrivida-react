@@ -12,9 +12,15 @@ function Header({ cantidadCarrito }) {
           <ul className="navbar-nav me-auto">
             <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/productos">Productos</Link></li>
+            {/* Los 3 enlaces nuevos agregados aquí: */}
+            <li className="nav-item"><Link className="nav-link" to="/nosotros">Nosotros</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/blog">Blog</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/contacto">Contacto</Link></li>
           </ul>
           <div className="d-flex gap-2 align-items-center">
             <Link to="/login" className="btn btn-outline-light btn-sm">Iniciar Sesión</Link>
+            {/* Nuevo botón de Registrarse */}
+            <Link to="/registro" className="btn btn-light btn-sm text-primary fw-bold">Registrarse</Link>
             <Link to="/carrito" className="btn btn-warning btn-sm fw-bold">
               🛒 Cart ({cantidadCarrito})
             </Link>

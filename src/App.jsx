@@ -3,14 +3,19 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-// Importamos todas las páginas que creaste
+// todas las paginas que he creado
 import Home from './pages/Home'
 import Productos from './pages/Productos'
 import Carrito from './pages/Carrito'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import Contacto from './pages/Contacto'
-import AdminHome from './pages/AdminHome' // La crearemos en el paso 2
+import AdminHome from './pages/AdminHome' 
+import AdminProductos from './pages/AdminProductos'
+import AdminUsuarios from './pages/AdminUsuarios'
+import Nosotros from './pages/Nosotros'
+import Blogs from './pages/Blogs'
+import DetalleProducto from './pages/DetalleProducto'
 
 function App() {
   const [carrito, setCarrito] = useState(() => {
@@ -53,13 +58,18 @@ function App() {
       <Header cantidadCarrito={totalUnidades} />
       <main className="flex-grow-1 container pb-4">
         <Routes>
-          {/* Aquí conectamos las rutas con tus archivos reales */}
+          {/* conectar las rutas con los archivos reales */}
           <Route path="/" element={<Home />} />
           <Route path="/productos" element={<Productos onAgregar={agregarAlCarrito} />} />
           <Route path="/carrito" element={<Carrito carrito={carrito} cambiarCantidad={cambiarCantidad} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/admin/productos" element={<AdminProductos />} />
+          <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/blog" element={<Blogs />} />
+          <Route path="/producto/:id" element={<DetalleProducto onAgregar={agregarAlCarrito} />} />
           <Route path="/admin" element={<AdminHome />} />
         </Routes>
       </main>
