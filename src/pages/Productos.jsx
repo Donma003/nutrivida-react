@@ -1,37 +1,62 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { obtenerProductos } from '../data/productosCRUD.js'
 
 function Productos({ onAgregar }) {
-  // Lista de productos
-  const PRODUCTOS = [
-    { id: 1, nombre: 'Proteína Vegana 1kg', precio: 25000, img: '/img/proteina-vegana.webp' },
-    { id: 2, nombre: 'Creatina Monohidratada 300g', precio: 18000, img: '/img/creatina-monohidratada.avif' },
-    { id: 3, nombre: 'Plan Nutricional 1 Mes', precio: 35000, img: '/img/plan-nutricional.jpg' },
-    { id: 4, nombre: 'Multivitamínico Deportivo', precio: 12000, img: '/img/multivitaminico.webp' }
-  ]
+  const [productos, setProductos] = useState([])
+
+  // Hook de React para cargar los datos apenas se abre la pagina
+  useEffect(() => {
+    const datosCargados = obtenerProductos()
+    setProductos(datosCargados)
+  }, [])
 
   return (
-    <div className="mt-4">
-      <h2 className="mb-4">Catálogo de Productos</h2>
+    <div className="container my-5">
+      <h2 className="text-center fw-bold mb-5 text-primary">Nuestros Servicios y Planes</h2>
+      
       <div className="row g-4">
-        {PRODUCTOS.map((prod) => (
-          <div key={prod.id} className="col-md-3">
+        {productos.map((producto) => (
+          <div key={producto.id} className="col-12 col-md-4 col-lg-3">
             <div className="card h-100 shadow-sm border-0">
-              <img src={prod.img} className="card-img-top" alt={prod.nombre} />
+              
+              <img 
+                src={producto.imagen} 
+                className="card-img-top" 
+                alt={producto.nombre} 
+                style={{ height: '200px', objectFit: 'cover' }}
+              />
+              
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title fs-6">{prod.nombre}</h5>
-                <p className="fw-bold text-primary mt-auto">${prod.precio.toLocaleString()}</p>
+                <span className="badge bg-info text-dark w-50 mb-2">{producto.categoria}</span>
+                <h5 className="card-title fw-bold fs-6">{producto.nombre}</h5>
+                <p className="card-text text-muted small flex-grow-1">
+                  {producto.descripcion.substring(0, 60)}...
+                </p>
                 
-                {/*botones*/}
-                <div className="d-grid gap-2 mt-2">
-                  <Link to={`/producto/${prod.id}`} className="btn btn-outline-dark btn-sm">
+                <h4 className="text-primary fw-bold mb-3">
+                  ${producto.precio.toLocaleString('es-CL')}
+                </h4>
+                
+                <div className="d-flex flex-column gap-2 mt-auto">
+                  {/* Botón para añadir al carrito (recibe la función desde App.jsx) */}
+                  <button 
+                    onClick={() => onAgregar(producto)} 
+                    className="btn btn-warning fw-bold w-100"
+                    disabled={producto.stock <= 0}
+                  >
+                    {producto.stock > 0 ? 'Añadir al carrito' : 'Sin cupos'}
+                  </button>
+                  
+                  {/* Enlace para ver el detalle del producto */}
+                  <Link 
+                    to={`/producto/${producto.id}`} 
+                    className="btn btn-outline-primary w-100"
+                  >
                     Ver detalle
                   </Link>
-                  <button className="btn btn-primary btn-sm" onClick={() => onAgregar(prod)}>
-                    Añadir al carrito
-                  </button>
                 </div>
-                {/*fin de los botones*/}
-
+                
               </div>
             </div>
           </div>

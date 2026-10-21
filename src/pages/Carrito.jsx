@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function Carrito({ carrito, cambiarCantidad }) {
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0)
 
@@ -28,7 +30,12 @@ function Carrito({ carrito, cambiarCantidad }) {
           <div className="col-md-4">
             <div className="card p-3 shadow-sm">
               <h4>Total: <span className="text-success">${total.toLocaleString()}</span></h4>
-              <button className="btn btn-success mt-3 w-100">Proceder al Pago</button>
+              
+              {/* Aquí se conecta el botón con la ruta de Checkout */}
+              <Link to="/checkout" className="btn btn-success mt-3 w-100 text-center fw-bold">
+                Proceder al Pago
+              </Link>
+              
             </div>
           </div>
         </div>

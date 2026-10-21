@@ -1,40 +1,63 @@
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-
-// Simulamos la misma base de datos de productos
-const PRODUCTOS = [
-  { id: 1, nombre: 'Proteína Vegana 1kg', precio: 25000, desc: 'Suplemento base de arveja y soya, ideal para recuperación muscular post-entreno. Libre de gluten y lácteos.', img: '/img/proteina-vegana.webp' },
-  { id: 2, nombre: 'Creatina Monohidratada 300g', precio: 18000, desc: 'Máxima pureza para aumentar la fuerza y el rendimiento en ejercicios de alta intensidad.', img: '/img/creatina-monohidratada.avif' },
-  { id: 3, nombre: 'Plan Nutricional 1 Mes', precio: 35000, desc: 'Asesoría 100% personalizada con uno de nuestros nutricionistas clínicos. Incluye pauta de alimentación y controles semanales.', img: '/img/plan-nutricional.jpg' },
-  { id: 4, nombre: 'Multivitamínico Deportivo', precio: 12000, desc: '60 cápsulas con el complejo vitamínico y minerales necesarios para mantener la energía diaria.', img: '/img/multivitaminico.webp' }
-]
+import { obtenerProductos } from '../data/productosCRUD.js'
 
 function DetalleProducto({ onAgregar }) {
-  const { id } = useParams() // obtener el ID de la URL
-  const producto = PRODUCTOS.find(prod => prod.id === parseInt(id))
+  const { id } = useParams()
+  const [producto, setProducto] = useState(null)
+
+  useEffect(() => {
+    // Obtener todos los productos desde la base de datos real (localStorage)
+    const productosDB = obtenerProductos()
+    // Buscar el producto que coincide con el ID de la URL
+    const encontrado = productosDB.find(p => p.id.toString() === id.toString())
+    setProducto(encontrado)
+  }, [id])
 
   if (!producto) {
-    return <h2 className="text-center mt-5 text-danger">Producto no encontrado</h2>
+    return (
+      <div className="container my-5 text-center">
+        <h3>Servicio no encontrado</h3>
+        <Link to="/productos" className="btn btn-primary mt-3">Volver al catálogo</Link>
+      </div>
+    )
   }
 
   return (
-    <div className="container mt-4">
-      <Link to="/productos" className="btn btn-outline-secondary mb-4">← Volver al catálogo</Link>
-      <div className="row bg-white shadow-sm p-4 rounded">
-        <div className="col-md-6 text-center mb-4 mb-md-0">
-          <img src={producto.img} alt={producto.nombre} className="img-fluid rounded border" />
+    <div className="container my-5">
+      <Link to="/productos" className="btn btn-outline-secondary mb-4">
+        ← Volver al catálogo
+      </Link>
+
+      <div className="row g-5 align-items-center">
+        {/* Imagen dinámica real */}
+        <div className="col-md-6">
+          <img 
+            src={producto.imagen} 
+            alt={producto.nombre} 
+            className="img-fluid rounded shadow-sm w-100" 
+            style={{ maxHeight: '450px', objectFit: 'cover' }}
+          />
         </div>
-        <div className="col-md-6 d-flex flex-column justify-content-center">
-          <h2 className="fw-bold">{producto.nombre}</h2>
-          <p className="fs-5 text-success fw-bold">${producto.precio.toLocaleString()}</p>
-          <hr />
-          <p className="text-muted">{producto.desc}</p>
-          <ul className="list-unstyled mt-3 mb-4">
-            <li>✅ Stock disponible</li>
-            <li>🚚 Envío a todo Chile</li>
-            <li>💳 Pago seguro</li>
-          </ul>
+
+        {/* Información dinámica real */}
+        <div className="col-md-6">
+          <span className="badge bg-info text-dark mb-2">{producto.categoria}</span>
+          <h1 className="fw-bold mb-3">{producto.nombre}</h1>
+          <h3 className="text-success fw-bold mb-4">${producto.precio.toLocaleString('es-CL')}</h3>
+          
+          <p className="text-muted mb-4" style={{ lineHeight: '1.8' }}>
+            {producto.descripcion}
+          </p>
+
+          <div className="mb-4">
+            <p className="mb-1 text-success">✔ Stock disponible: {producto.stock} unidades</p>
+            <p className="mb-1 text-muted">🚚 Envío e inscripción inmediata en clínica</p>
+            <p className="mb-1 text-muted">💳 Pago seguro garantizado</p>
+          </div>
+
           <button 
-            className="btn btn-primary btn-lg w-100 mt-auto"
+            className="btn btn-primary btn-lg w-100 fw-bold py-3"
             onClick={() => onAgregar(producto)}
           >
             Añadir al carrito

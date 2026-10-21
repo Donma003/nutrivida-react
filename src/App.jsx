@@ -15,6 +15,12 @@ import AdminProductos from './pages/AdminProductos'
 import AdminUsuarios from './pages/AdminUsuarios'
 import Nosotros from './pages/Nosotros'
 import Blogs from './pages/Blogs'
+import Categorias from './pages/Categorias'
+import Checkout from './pages/Checkout'
+import PagoExitoso from './pages/PagoExitoso'
+import PagoError from './pages/PagoError'
+import AdminCategorias from './pages/AdminCategorias'
+import AdminOrdenes from './pages/AdminOrdenes'
 import DetalleProducto from './pages/DetalleProducto'
 
 function App() {
@@ -70,6 +76,12 @@ function App() {
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/blog" element={<Blogs />} />
           <Route path="/producto/:id" element={<DetalleProducto onAgregar={agregarAlCarrito} />} />
+          <Route path="/categorias" element={<Categorias onAgregar={agregarAlCarrito} />} />
+          <Route path="/checkout" element={<Checkout carrito={carrito} />} />
+          <Route path="/pago-exitoso" element={<PagoExitoso />} />
+          <Route path="/pago-error" element={<PagoError />} />
+          <Route path="/admin/categorias" element={<AdminCategorias />} />
+          <Route path="/admin/ordenes" element={<AdminOrdenes />} />
           <Route path="/admin" element={<AdminHome />} />
         </Routes>
       </main>

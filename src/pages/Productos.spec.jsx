@@ -1,10 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import Productos from './Productos'
+import * as crud from '../data/productosCRUD.js' 
 
 describe('Componente Productos', () => {
+
+  const mockProductos = [
+    { id: 1, codigo: 'CN001', nombre: 'Primera consulta nutricional', descripcion: 'Prueba', precio: 35000, stock: 50, stockCritico: 5, categoria: 'Consulta', imagen: '' }
+  ];
+
+  beforeEach(() => {
+    spyOn(crud, 'obtenerProductos').and.returnValue(mockProductos);
+  });
   
-  // Prueba 1: Manipulación y lectura del DOM
   it('Debe renderizar correctamente el título del catálogo', () => {
     render(
       <BrowserRouter>
@@ -12,11 +20,10 @@ describe('Componente Productos', () => {
       </BrowserRouter>
     )
     
-    const titulo = screen.getByText('Catálogo de Productos')
+    const titulo = screen.getByText('Nuestros Servicios y Planes')
     expect(titulo).not.toBeNull()
   })
 
-  // Prueba 2: Uso de Mocks (Simulaciones)
   it('Debe llamar a la función onAgregar al hacer clic en "Añadir al carrito"', () => {
     const mockOnAgregar = jasmine.createSpy('onAgregar')
     
@@ -30,5 +37,7 @@ describe('Componente Productos', () => {
     fireEvent.click(botonesAgregar[0])
     
     expect(mockOnAgregar).toHaveBeenCalled()
+    // Usamos objectContaining para que no sea tan estricto con todos los campos
+    expect(mockOnAgregar).toHaveBeenCalledWith(jasmine.objectContaining({ id: 1, nombre: 'Primera consulta nutricional' }))
   })
 })

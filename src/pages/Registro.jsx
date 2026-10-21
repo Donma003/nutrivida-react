@@ -79,7 +79,7 @@ function Registro() {
       return
     }
 
-    // 2. Validar Correo (Dominios permitidos)[cite: 30]
+    // 2. Validar Correo (Dominios permitidos)
     const dominiosPermitidos = ['@duoc.cl', '@profesor.duoc.cl', '@gmail.com']
     const correoValido = dominiosPermitidos.some(dominio => formData.correo.endsWith(dominio))
     if (!correoValido) {
@@ -117,22 +117,22 @@ function Registro() {
           <div className="row">
             <div className="col-md-6 mb-3">
               <label className="form-label fw-bold">NOMBRES</label>
-              <input type="text" className="form-control" name="nombre" value={formData.nombre} onChange={handleChange} required maxLength="50" /> {/* Max 50 caracteres[cite: 30] */}
+              <input type="text" className="form-control" name="nombre" value={formData.nombre} onChange={handleChange} required maxLength="50" /> {/* Max 50 caracteres */}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-bold">APELLIDOS</label>
-              <input type="text" className="form-control" name="apellidos" value={formData.apellidos} onChange={handleChange} required maxLength="100" /> {/* Max 100 caracteres[cite: 30] */}
+              <input type="text" className="form-control" name="apellidos" value={formData.apellidos} onChange={handleChange} required maxLength="100" /> {/* Max 100 caracteres */}
             </div>
           </div>
 
           <div className="row">
             <div className="col-md-6 mb-3">
               <label className="form-label fw-bold">CORREO</label>
-              <input type="email" className="form-control" name="correo" value={formData.correo} onChange={handleChange} placeholder="ejemplo@duoc.cl" required maxLength="100" /> {/* Max 100 caracteres[cite: 30] */}
+              <input type="email" className="form-control" name="correo" value={formData.correo} onChange={handleChange} placeholder="ejemplo@duoc.cl" required maxLength="100" /> {/* Max 100 caracteres*/}
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-bold">FECHA DE NACIMIENTO</label>
-              <input type="date" className="form-control" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} /> {/* Opcional[cite: 30] */}
+              <input type="date" className="form-control" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} /> {/* Opcional*/}
             </div>
           </div>
 
@@ -148,7 +148,7 @@ function Registro() {
             </div>
             <div className="col-md-6 mb-3">
               <label className="form-label fw-bold">COMUNA</label>
-              {/* Se deshabilita si no hay región seleccionada[cite: 31] */}
+              {/* Se deshabilita si no hay región seleccionada */}
               <select className="form-select" name="comuna" value={formData.comuna} onChange={handleChange} required disabled={!formData.region}>
                 <option value="">Seleccione comuna...</option>
                 {comunasDisponibles.map(c => (
@@ -160,7 +160,7 @@ function Registro() {
 
           <div className="mb-4">
             <label className="form-label fw-bold">DIRECCIÓN</label>
-            <input type="text" className="form-control" name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Calle, Número, Depto" required maxLength="300" /> {/* Max 300 caracteres[cite: 31] */}
+            <input type="text" className="form-control" name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Calle, Número, Depto" required maxLength="300" /> {/* Max 300 caracteres*/}
           </div>
           
           <button type="submit" className="btn btn-primary w-100 fw-bold">

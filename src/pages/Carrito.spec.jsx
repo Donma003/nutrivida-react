@@ -4,7 +4,7 @@ import Carrito from './Carrito'
 
 describe('Componente Carrito', () => {
   
-  // Creamos un Mock de datos (Simulación de un producto en el carrito)
+  // Crear un Mock de datos (Simulación de un producto en el carrito)
   const mockCarrito = [
     { id: 1, nombre: 'Vitamina C', precio: 5000, cantidad: 2 }
   ]
@@ -26,7 +26,7 @@ describe('Componente Carrito', () => {
         <Carrito carrito={mockCarrito} cambiarCantidad={() => {}} />
       </BrowserRouter>
     )
-    // Verificamos que el nombre del producto simulado aparezca físicamente en la pantalla
+    // Verificar que el nombre del producto simulado aparezca físicamente en la pantalla
     expect(container.innerHTML).toContain('Vitamina C')
   })
 
@@ -37,7 +37,7 @@ describe('Componente Carrito', () => {
         <Carrito carrito={mockCarrito} cambiarCantidad={() => {}} />
       </BrowserRouter>
     )
-    // Quitamos los puntos y las comas del formato para asegurar la lectura
+    // Quitar los puntos y las comas del formato para asegurar la lectura
     const textoDOM = container.innerHTML.replace(/[\.,]/g, '') 
     expect(textoDOM).toContain('10000')
   })
@@ -60,7 +60,7 @@ describe('Componente Carrito', () => {
         <Carrito carrito={mockCarrito} cambiarCantidad={() => {}} />
       </BrowserRouter>
     )
-    // Aseguramos que haya contenedores estructurales presentes
+    // Asegurar que haya contenedores estructurales presentes
     const elementosEstructurales = container.querySelectorAll('div, table, ul, li')
     expect(elementosEstructurales.length).toBeGreaterThan(0)
   })
